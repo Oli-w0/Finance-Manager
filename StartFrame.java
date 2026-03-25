@@ -2,9 +2,12 @@ package financeproject;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class StartFrame extends JFrame 
 {
+	
 	public StartFrame()
 	{
 	setTitle("Finance Tracker");
@@ -23,12 +26,6 @@ public class StartFrame extends JFrame
     JLabel titleLabel = new JLabel("Personal Finance Tracker");
     titleLabel.setFont(new Font("Arial", Font.BOLD, 18));
     titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT); // center in BoxLayout
-
-    // Subtitle
-    JLabel subLabel = new JLabel("Manage your money simply.");
-    subLabel.setFont(new Font("Arial", Font.PLAIN, 13));
-    subLabel.setForeground(Color.GRAY);
-    subLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
     // Spacer — rigid area creates a fixed-height gap between components
     // BoxLayout doesn't have insets like GridBagLayout so you use these instead
@@ -52,7 +49,6 @@ public class StartFrame extends JFrame
 
     // Add everything to the panel in order
     panel.add(titleLabel);
-    panel.add(subLabel);
     panel.add(spacer1);
     panel.add(loginBtn);
     panel.add(spacer2);
@@ -65,7 +61,7 @@ public class StartFrame extends JFrame
     // Open LoginFrame, hide StartPage (don't dispose — user might come back)
     loginBtn.addActionListener(e -> 
     {
-        LoginFrame loginFrame = new LoginFrame();
+        LoginFrame loginFrame = new LoginFrame(this);
         loginFrame.setVisible(true);
         setVisible(false); // hide StartPage while login is open
     });
@@ -73,11 +69,12 @@ public class StartFrame extends JFrame
     // Open CreateAccount, hide StartPage
     createBtn.addActionListener(e -> 
     {
-        CreateAccount createAccount = new CreateAccount();
+        CreateAccount createAccount = new CreateAccount(this);
         createAccount.setVisible(true);
         setVisible(false);
     });
 }
+
 }
 
 

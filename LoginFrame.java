@@ -7,9 +7,10 @@ public class LoginFrame extends JFrame {
 	
 	private StartFrame startFrame;
 
-    public LoginFrame() {
+    public LoginFrame(StartFrame startFrame) {
+    	this.startFrame = startFrame;
         setTitle("Finance Tracker — Login");
-        setSize(380, 220);
+        setSize(450, 350);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null); // centres on screen
         setResizable(false);
@@ -41,22 +42,18 @@ public class LoginFrame extends JFrame {
         panel.add(errorLabel, gbc);
 
         // Login button
-        gbc.gridy = 3;
+        gbc.gridy = 2;
+        JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 0));
         JButton loginBtn = new JButton("Login");
-        panel.add(loginBtn, gbc);
+        JButton backBtn = new JButton("⬅️");
+        btnPanel.add(loginBtn, gbc);
+        btnPanel.add(backBtn, gbc);
+        panel.add(btnPanel, gbc);
 
-        loginBtn.addActionListener(e -> {
-            String username = usernameField.getText().trim();
-            String password = new String(passwordField.getPassword()).trim();
-
-            // Simple hardcoded check for now — swap with AuthManager later
-            if (username.equals("admin") && password.equals("1234")) {
-                dispose(); // close login window
-                //new MainFrame(username).setVisible(true);
-            } else {
-                errorLabel.setText("Invalid username or password.");
-                passwordField.setText("");
-            }
+      //Button Functions
+        backBtn.addActionListener(e -> {
+            startFrame.setVisible(true);
+            dispose();
         });
 
         add(panel);
