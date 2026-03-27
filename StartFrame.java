@@ -10,11 +10,11 @@ public class StartFrame extends JFrame
 	
 	public StartFrame()
 	{
-	setTitle("Finance Tracker");
+	setTitle("Finance Manager");
     setSize(400, 300);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setLocationRelativeTo(null);
-    setResizable(false);
+    //setResizable(false);
 
     // Main panel with a vertical BoxLayout
     // BoxLayout stacks components top to bottom in a single column

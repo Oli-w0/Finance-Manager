@@ -1,6 +1,7 @@
 package financeproject;
 
 import javax.swing.*;
+import static javax.swing.JOptionPane.showMessageDialog;
 import java.awt.*;
 
 public class CreateAccount extends JFrame {
@@ -9,11 +10,11 @@ public class CreateAccount extends JFrame {
 
     public CreateAccount(StartFrame startFrame) {
     	this.startFrame = startFrame;
-        setTitle("Finance Tracker — Create Account");
+        setTitle("Finance Manager — Create Account");
         setSize(500, 420);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null); // centers on screen
-        setResizable(false);
+        //setResizable(false);
 
         JPanel panel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -55,13 +56,15 @@ public class CreateAccount extends JFrame {
         statusLabel.setHorizontalAlignment(SwingConstants.CENTER);
         panel.add(statusLabel, gbc);
         
-        gbc.gridy = 5;
+        gbc.gridy = 6;
         JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 0));
         JButton createBtn = new JButton("Create Account");
-        JButton backBtn = new JButton("⬅️");
+        JButton backBtn = new JButton("<-");
         btnPanel.add(createBtn);
         btnPanel.add(backBtn);
         panel.add(btnPanel, gbc);
+        
+        add(panel);
         
         //Button Functions
         backBtn.addActionListener(e -> {
@@ -71,10 +74,59 @@ public class CreateAccount extends JFrame {
         
         createBtn.addActionListener(e ->
         {
+        	String fullname = fullnameField.getText().trim();
+        	String username = usernameField.getText().trim();
+        	String password = new String(passwordField.getPassword());
+        	String confirmPassword = new String(confirmField.getPassword());
+        	String ageText = ageField.getText().trim();
         	
-        });
+        	if(fullname.isEmpty() || username.isEmpty() || password.isEmpty() || ageText.isEmpty())          
+        	{
+        		showMessageDialog(this, "Please ensure all fields are filled");
+        		return;
+        	}
+        	
+        	   int age;
+        	    try {
+        	        age = Integer.parseInt(ageText);
+        	    } catch (NumberFormatException ex) {
+        	        statusLabel.setForeground(Color.RED);
+        	        statusLabel.setText("Please enter a valid age.");
+        	        return;
+        	    }
+        	    if(age < 18 ||  age > 100)
+        	    {
+        	    	showMessageDialog(this, "Age not valid");
+        	    	return;
+        	    }
+        	
+        	if(!password.equals(confirmPassword))
+        	{
+        		showMessageDialog(this, "Passwords do not match");
+        		return;
+        	}
+        	
+        	if(password.length() < 6)
+        	{
+        		showMessageDialog(this, "Password must be atleast 6 characters long");
+        		return;
+        	}
+        
+        	 AuthManager auth = new AuthManager();
+             boolean success = auth.createAccount(fullname, username, password, age);
 
-        add(panel);
+             if (success) {
+                 JOptionPane.showMessageDialog(this,
+                     "Account created successfully!\nYou can now log in.",
+                     "Success",
+                     JOptionPane.INFORMATION_MESSAGE);
+                 startFrame.setVisible(true);
+                 dispose();
+             } else {            	 
+            	 showMessageDialog(null, "Username already taken. Try another.");
+             }
+    });
+
 
         
     }
