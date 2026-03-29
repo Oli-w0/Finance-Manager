@@ -7,7 +7,7 @@ public class AuthManager {
 
     private static final String DB_URL  = "jdbc:mysql://localhost:3306/userDB";
     private static final String DB_USER = "root";
-    private static final String DB_PASS = "@ppLIe1280"; // change this to your MySQL password
+    private static final String DB_PASS = "@ppLIe1280"; 
 
     // Run once at startup to create the table if it doesn't exist
     public static void initDatabase() {

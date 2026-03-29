@@ -52,25 +52,26 @@ public class LoginFrame extends JFrame {
         panel.add(btnPanel, gbc);
 
       //Button Functions
-        backBtn.addActionListener(e -> {
+        backBtn.addActionListener(_ -> {
             startFrame.setVisible(true);
             dispose();
         });
         
         // ── Login button ─────────────────────────────────────────────────────
-        loginBtn.addActionListener(e -> {
+        loginBtn.addActionListener(_ -> {
             String username = usernameField.getText().trim();
             String password = new String(passwordField.getPassword()).trim();
 
             AuthManager auth = new AuthManager();
 
             if (auth.login(username, password)) {
+            	System.out.println("Logged in as " + username);
                 // Login successful — close StartPage permanently, open MainFrame
                 startFrame.dispose();
                 dispose();
                 new MainFrame(username).setVisible(true);
             } else {
-                errorLabel.setText("Invalid username or password.");
+                showMessageDialog(this, "Invalid username or password");
                 passwordField.setText("");
             }
         });
