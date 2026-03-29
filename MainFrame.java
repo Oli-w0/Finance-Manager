@@ -14,7 +14,7 @@ public class MainFrame extends JFrame {
 
     public MainFrame(String username) {
         this.username = username;
-        this.manager  = new TransactionManager(username); // FIXED — actually creates it
+        this.manager  = new TransactionManager(username); 
 
         setTitle("Finance Tracker — Welcome, " + username);
         setSize(800, 550);
@@ -56,8 +56,10 @@ public class MainFrame extends JFrame {
         JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         JButton editBtn   = new JButton("Edit Selected");
         JButton deleteBtn = new JButton("Delete Selected");
+        JButton logoutBtn = new JButton("LogOut");
         btnPanel.add(editBtn);
         btnPanel.add(deleteBtn);
+        btnPanel.add(logoutBtn);
         panel.add(btnPanel, BorderLayout.SOUTH);
 
         deleteBtn.addActionListener(e -> {
@@ -70,6 +72,14 @@ public class MainFrame extends JFrame {
             manager.deleteTransaction(id);
             tableModel.removeRow(row);
         });
+        
+        logoutBtn.addActionListener(e -> {
+        	dispose();
+        	StartFrame frame = new StartFrame();
+        	frame.setVisible(true);
+        	
+        });
+        
 
         editBtn.addActionListener(e -> {
             int row = table.getSelectedRow();
