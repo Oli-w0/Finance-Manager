@@ -91,3 +91,5 @@ What DECIMAL(10,2) means for storing monetary values
 
 Database Migration
 Claude assisted with migrating the project from MySQL to SQLite to make the application fully portable and self-contained, requiring no external database installation from the end user.
+
+Also Claude reviewed my readme and added improvements
