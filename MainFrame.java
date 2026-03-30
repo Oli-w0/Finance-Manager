@@ -175,6 +175,7 @@ public class MainFrame extends JFrame {
         JButton addBtn = new JButton("Add Transaction");
         panel.add(addBtn, gbc);
 
+        //addButton function
         addBtn.addActionListener(e -> {
             String type     = (String) typeBox.getSelectedItem();
             String category = categoryField.getText().trim();

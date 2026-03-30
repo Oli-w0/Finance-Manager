@@ -71,6 +71,7 @@ public class TransactionManager
         }
         return list;
     }
+    //edit a transaction
     public boolean editTransaction(int id, double newAmount, String newDescription) {
         String sql = """
             UPDATE transactions 

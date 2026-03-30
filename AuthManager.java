@@ -19,6 +19,7 @@ public class AuthManager {
 	        )
 	        """;
 
+	    //TransactionsTable
 	    String transactionsTable = """
 	        CREATE TABLE IF NOT EXISTS transactions (
 	            id          INTEGER PRIMARY KEY AUTOINCREMENT,
