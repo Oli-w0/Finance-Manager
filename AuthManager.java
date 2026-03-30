@@ -5,35 +5,35 @@ import java.sql.*;
 
 public class AuthManager {
 
-    private static final String DB_URL  = "jdbc:mysql://localhost:3306/userDB";
-    private static final String DB_USER = "root";
-    private static final String DB_PASS = "@ppLIe1280"; 
+	private static final String DB_URL = "jdbc:sqlite:user.db";
 
     // Run once at startup to create the table if it doesn't exist
-    public static void initDatabase() {
-        String sql = """
-            CREATE TABLE IF NOT EXISTS users (
-                id       INT          PRIMARY KEY AUTO_INCREMENT,
-                fullname VARCHAR(100) NOT NULL,
-                username VARCHAR(50)  NOT NULL UNIQUE,
-                password VARCHAR(255) NOT NULL,
-                age      INT          NOT NULL
-            )
-            """;
-        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
-             Statement stmt = conn.createStatement()) {
-            stmt.execute(sql);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+	public static void initDatabase() {
+	    String sql = """
+	        CREATE TABLE IF NOT EXISTS users (
+	            id       INTEGER PRIMARY KEY AUTOINCREMENT,
+	            fullname TEXT    NOT NULL,
+	            username TEXT    NOT NULL UNIQUE,
+	            password TEXT    NOT NULL,
+	            age      INTEGER NOT NULL
+	        )
+	        """;
+	        
+	    try (Connection conn = DriverManager.getConnection(DB_URL);
+	         Statement stmt  = conn.createStatement()) {
+	        stmt.execute(sql);
+	        System.out.println("Database initialised successfully");
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	}
 
     // Create a new user — returns false if username already taken
     public boolean createAccount(String fullname, String username, String password, int age) {
         String hashed = hashPassword(password);
         String sql = "INSERT INTO users (fullname, username, password, age) VALUES (?, ?, ?, ?)";
 
-        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
+        try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, fullname);
@@ -57,7 +57,7 @@ public class AuthManager {
         String hashed = hashPassword(password);
         String sql = "SELECT id FROM users WHERE username = ? AND password = ?";
 
-        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
+        try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, username);

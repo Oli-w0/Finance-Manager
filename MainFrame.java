@@ -69,8 +69,18 @@ public class MainFrame extends JFrame {
                 return;
             }
             int id = (int) tableModel.getValueAt(row, 0);
-            manager.deleteTransaction(id);
-            tableModel.removeRow(row);
+            int result = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this transaction?",
+        			"Confirmation", JOptionPane.YES_NO_OPTION);
+        	
+        	if(result == JOptionPane.YES_OPTION)
+        	{
+        		JOptionPane.showMessageDialog(null, "Transaction deleted");
+        	manager.deleteTransaction(id);
+        	tableModel.removeRow(row);
+        	}
+        	else if(result == JOptionPane.NO_OPTION)
+        		JOptionPane.showMessageDialog(null, "Transaction won't be deleted");
+        	
         });
         
         logoutBtn.addActionListener(e -> {

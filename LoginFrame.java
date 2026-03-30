@@ -65,7 +65,6 @@ public class LoginFrame extends JFrame {
             AuthManager auth = new AuthManager();
 
             if (auth.login(username, password)) {
-            	System.out.println("Logged in as " + username);
                 // Login successful — close StartPage permanently, open MainFrame
                 startFrame.dispose();
                 dispose();

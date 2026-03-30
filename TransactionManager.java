@@ -7,9 +7,7 @@ import java.util.ArrayList;
 public class TransactionManager 
 {
 
-    private static final String DB_URL  = "jdbc:mysql://localhost:3306/userDB";
-    private static final String DB_USER = "root";
-    private static final String DB_PASS = "@ppLIe1280"; 
+	private static final String DB_URL = "jdbc:sqlite:user.db";
     
     private String username;
     
@@ -25,7 +23,7 @@ public class TransactionManager
                 VALUES (?, ?, ?, ?, ?)
                 """;
     	
-    	 try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
+    	 try (Connection conn = DriverManager.getConnection(DB_URL);
                  PreparedStatement stmt = conn.prepareStatement(sql)) {
 
                 stmt.setString(1, username);
@@ -51,7 +49,7 @@ public class TransactionManager
             ORDER BY date DESC
             """;
 
-        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
+        try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, username);
@@ -80,7 +78,7 @@ public class TransactionManager
             WHERE id = ? AND username = ?
             """;
 
-        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
+        try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setDouble(1, newAmount);
@@ -100,7 +98,7 @@ public class TransactionManager
     public boolean deleteTransaction(int id) {
         String sql = "DELETE FROM transactions WHERE id = ? AND username = ?";
 
-        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
+        try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, id);
@@ -124,7 +122,7 @@ public class TransactionManager
             WHERE username = ?
             """;
 
-        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
+        try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, username);
