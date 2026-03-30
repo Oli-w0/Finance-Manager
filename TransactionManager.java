@@ -94,7 +94,7 @@ public class TransactionManager
         }
     }
 
-    // ── Delete a transaction ─────────────────────────────────────────────────
+    //Delete a transaction
     public boolean deleteTransaction(int id) {
         String sql = "DELETE FROM transactions WHERE id = ? AND username = ?";
 
@@ -112,7 +112,7 @@ public class TransactionManager
         }
     }
 
-    // ── Generate report data ─────────────────────────────────────────────────
+    //Generate report data
     public String generateReport() {
         String sql = """
             SELECT 

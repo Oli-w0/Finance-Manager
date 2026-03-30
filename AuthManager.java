@@ -9,7 +9,7 @@ public class AuthManager {
 
     // Run once at startup to create the table if it doesn't exist
 	public static void initDatabase() {
-	    String sql = """
+	    String usersTable = """
 	        CREATE TABLE IF NOT EXISTS users (
 	            id       INTEGER PRIMARY KEY AUTOINCREMENT,
 	            fullname TEXT    NOT NULL,
@@ -18,10 +18,23 @@ public class AuthManager {
 	            age      INTEGER NOT NULL
 	        )
 	        """;
-	        
+
+	    String transactionsTable = """
+	        CREATE TABLE IF NOT EXISTS transactions (
+	            id          INTEGER PRIMARY KEY AUTOINCREMENT,
+	            username    TEXT    NOT NULL,
+	            type        TEXT    NOT NULL,
+	            category    TEXT    NOT NULL,
+	            amount      REAL    NOT NULL,
+	            description TEXT    NOT NULL,
+	            date        TEXT    DEFAULT (datetime('now'))
+	        )
+	        """;
+
 	    try (Connection conn = DriverManager.getConnection(DB_URL);
 	         Statement stmt  = conn.createStatement()) {
-	        stmt.execute(sql);
+	        stmt.execute(usersTable);
+	        stmt.execute(transactionsTable);
 	        System.out.println("Database initialised successfully");
 	    } catch (SQLException e) {
 	        e.printStackTrace();

@@ -113,9 +113,18 @@ public class MainFrame extends JFrame {
                 try {
                     double newAmount = Double.parseDouble(amountField.getText().trim());
                     String newDesc   = descField.getText().trim();
-                    manager.editTransaction(id, newAmount, newDesc);
-                    tableModel.setValueAt(newAmount, row, 3);
-                    tableModel.setValueAt(newDesc,   row, 4);
+                    int result1 = JOptionPane.showConfirmDialog(null, "Are you sure you want to edit this transaction?",
+                			"Confirmation", JOptionPane.YES_NO_OPTION);
+                	
+                	if(result1 == JOptionPane.YES_OPTION)
+                	{
+                		JOptionPane.showMessageDialog(null, "Transaction edited");
+                		manager.editTransaction(id, newAmount, newDesc);
+                        tableModel.setValueAt(newAmount, row, 3);
+                        tableModel.setValueAt(newDesc,   row, 4);
+                	}
+                	else if(result1 == JOptionPane.NO_OPTION)
+                		JOptionPane.showMessageDialog(null, "Transaction won't be edited");
                 } catch (NumberFormatException ex) {
                     JOptionPane.showMessageDialog(this, "Please enter a valid amount.");
                 }
